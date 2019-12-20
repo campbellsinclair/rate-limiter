@@ -3,7 +3,11 @@ import time
 
 
 class RateLimiter:
-    def __init__(self, max_calls, period):
+    def __init__(self, max_calls, period, burst=True):
+        if not burst:
+            period = period / max_calls
+            max_calls = 1
+
         self.period = period
         self.call_times = collections.deque([0] * max_calls)  # oldest at start, newest at end
 
